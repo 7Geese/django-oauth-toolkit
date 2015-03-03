@@ -149,7 +149,7 @@ class Grant(models.Model):
     * :attr:`redirect_uri` Self explained
     * :attr:`scope` Required scopes, optional
     """
-    user = models.ForeignKey(AUTH_USER_MODEL)
+    user = models.ForeignKey(AUTH_USER_MODEL, related_name=oauth2_grants)
     code = models.CharField(max_length=255, db_index=True)  # code comes from oauthlib
     application = models.ForeignKey(oauth2_settings.APPLICATION_MODEL)
     expires = models.DateTimeField()
@@ -184,7 +184,7 @@ class AccessToken(models.Model):
                       :data:`settings.ACCESS_TOKEN_EXPIRE_SECONDS`
     * :attr:`scope` Allowed scopes
     """
-    user = models.ForeignKey(AUTH_USER_MODEL)
+    user = models.ForeignKey(AUTH_USER_MODEL, related_name=oauth2_accesstokens)
     token = models.CharField(max_length=255, db_index=True)
     application = models.ForeignKey(oauth2_settings.APPLICATION_MODEL)
     expires = models.DateTimeField()
@@ -236,7 +236,7 @@ class RefreshToken(models.Model):
     * :attr:`access_token` AccessToken instance this refresh token is
                            bounded to
     """
-    user = models.ForeignKey(AUTH_USER_MODEL)
+    user = models.ForeignKey(AUTH_USER_MODEL, related_name=oauth2_refreshtokens)
     token = models.CharField(max_length=255, db_index=True)
     application = models.ForeignKey(oauth2_settings.APPLICATION_MODEL)
     access_token = models.OneToOneField(AccessToken,
