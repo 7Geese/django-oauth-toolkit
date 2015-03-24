@@ -27,6 +27,7 @@ class Migration(SchemaMigration):
             ('client_type', self.gf('django.db.models.fields.CharField')(max_length=32)),
             ('authorization_grant_type', self.gf('django.db.models.fields.CharField')(max_length=32)),
             ('client_secret', self.gf('django.db.models.fields.CharField')(default='89288b8343edef095b5fee98b4def28409cf4e064fcd26b00c555f51d8fdabfcaedbae8b9d6739080cf27d216e13cc85133d794c9cc1018e0d116c951f0b865e', max_length=255, blank=True)),
+            ('skip_authorization', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
         ))
         db.send_create_signal(u'oauth2_provider', ['Application'])
@@ -127,6 +128,7 @@ class Migration(SchemaMigration):
         },
         u"%s.%s" % (ApplicationModel._meta.app_label, ApplicationModel._meta.object_name): {
             'Meta': {'object_name': ApplicationModel.__name__},
+            'skip_authorization': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'authorization_grant_type': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
             'client_id': ('django.db.models.fields.CharField', [], {'default': "'30f17d266183cd455bc57ce8548a439db3491353'", 'unique': 'True', 'max_length': '100'}),
             'client_secret': ('django.db.models.fields.CharField', [], {'default': "'18e68df61ad8e1af355644ddf6a636b269b6309aafbd2a34d4f5ed6c5562e44c0792c5b2441571e85cbf8a85249dca5537dedb6fd6f60e134f4a60f3865c8395'", 'max_length': '255', 'blank': 'True'}),
